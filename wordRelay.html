@@ -1,0 +1,58 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>relay</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <!--html에서 케밥케이스 js에서는 카멜케이스 가능-->
+      <word-relay start-word="제로초"></word-relay>
+      <word-relay start-word="초밥"></word-relay>
+      <word-relay start-word="바보"></word-relay>
+    </div>
+  </body>
+  <script>
+    Vue.component('wordRelay', {
+      //전역컴포넌트
+      template: `
+      <div>
+        <div>{{word}}</div>
+        <form v-on:submit="onSubmit">
+          <input ref="new" type="text" v-model="value" />
+          <button>입력!</button>
+        </form>
+        <div>{{result}}</div>
+      </div>
+      `,
+      props: ['start-word'],
+      data() {
+        return {
+          word: this.startWord,
+          value: '',
+          result: ''
+        };
+      },
+      methods: {
+        onSubmit(e) {
+          e.preventDefault();
+          if (this.word[this.word.length - 1] == this.value[0]) {
+            this.word = this.value;
+            this.result = '딩동댕';
+          } else {
+            this.result = '땡';
+          }
+          this.value = '';
+          this.$ref.new.focus();
+        }
+      }
+    });
+  </script>
+
+  <script>
+    const app = new Vue({
+      el: '#root'
+    });
+  </script>
+</html>
