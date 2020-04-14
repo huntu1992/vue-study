@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     average() {
-      return this.result.reduce;
+      return this.result.reduce((a, c) => a + c, 0) / this.result.length || 0;
     }
   },
   methods: {
