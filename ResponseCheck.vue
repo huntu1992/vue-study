@@ -14,33 +14,38 @@ export default {
   data() {
     return {
       result: [],
-      state: 'waiting',
-      message: '클릭해서 시작하세요.'
+      state: "waiting",
+      message: "클릭해서 시작하세요."
     };
+  },
+  computed: {
+    average() {
+      return this.result.reduce;
+    }
   },
   methods: {
     onReset() {
-      console.log('cliked');
+      console.log("cliked");
       this.result = [];
     },
     onClickScreen() {
-      if (this.state === 'waiting') {
-        this.state = 'ready';
-        this.message = '초록색이되면 클릭하세요';
+      if (this.state === "waiting") {
+        this.state = "ready";
+        this.message = "초록색이되면 클릭하세요";
         timeout = setTimeout(() => {
-          this.state = 'now';
-          this.message = '지금클릭';
+          this.state = "now";
+          this.message = "지금클릭";
           startTime = new Date();
         }, Math.floor(Math.random() * 1000 + 2000)); //2~3초
-      } else if (this.state === 'ready') {
+      } else if (this.state === "ready") {
         clearTimeout(timeout);
-        this.message = '너무 성급하시군요';
-        this.state = 'now';
-      } else if (this.state === 'now') {
+        this.message = "너무 성급하시군요";
+        this.state = "now";
+      } else if (this.state === "now") {
         endTime = new Date();
 
-        this.state = 'waiting';
-        this.message = '클릭해서 시작하세요';
+        this.state = "waiting";
+        this.message = "클릭해서 시작하세요";
         this.result.push(endTime - startTime);
       }
     }
