@@ -1,4 +1,4 @@
-<template v-if="onOff">
+<template>
   <div>
     <div id="computer" :style="computedStyleObject"></div>
     <div>
@@ -37,8 +37,7 @@ export default {
     return {
       imageCode: rspCoords["바위"],
       result: "",
-      score: 0,
-      onOff: true
+      score: 0
     };
   },
   computed: {
@@ -64,6 +63,20 @@ export default {
         this.result = "졌습니다.";
         this.score -= 1;
       }
+      setTimeout(() => {
+        this.changeHand();
+      }, 1000);
+    },
+    changeHand() {
+      interval = setInterval(() => {
+        if (this.imageCode === rspCoords.바위) {
+          this.imageCode = rspCoords.가위;
+        } else if (this.imageCode === rspCoords.가위) {
+          this.imageCode = rspCoords.보;
+        } else {
+          this.imageCode = rspCoords.바위;
+        }
+      }, 100);
     }
   },
   created() {
@@ -74,15 +87,7 @@ export default {
   },
   mounted() {
     console.log("mounted");
-    interval = setInterval(() => {
-      if (this.imageCode === rspCoords.바위) {
-        this.imageCode = rspCoords.가위;
-      } else if (this.imageCode === rspCoords.가위) {
-        this.imageCode = rspCoords.보;
-      } else {
-        this.imageCode = rspCoords.바위;
-      }
-    }, 200);
+    this.changeHand();
   },
   beforeUpdate() {
     console.log("before update");
@@ -91,7 +96,8 @@ export default {
     console.log("updated");
   },
   beforeDestroy() {
-    clearInterval();
+    console.log("before detroyed");
+    clearInterval(); //이거해줘야 setInterval의 메모리 누수가 없음
   },
   destroyed() {
     console.log("detroyed");
